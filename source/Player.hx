@@ -21,7 +21,9 @@ class Player extends FlxSprite
 		setFacingFlip(RIGHT, true, false);
 
 		setSize(8, 8);
-		offset.set(4, 8);
+		offset.set(4, 4);
+		/* change the player's hitbox so he doesn't need to "thread the needle"
+			everytime they need to get through narrow doorways */
 
 		animation.add("d_idle", [0]);
 		animation.add("lr_idle", [3]);
