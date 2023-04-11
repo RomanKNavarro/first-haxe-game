@@ -10,14 +10,16 @@ class PlayState extends FlxState
 {
 	var player:Player;
 
-	// load up our ogmo map in an object. map and walls vars created.
+	// load up our ogmo map as a "FlxOgmo3Loader" object. Map and walls vars created.
 	var map:FlxOgmo3Loader;
 	var walls:FlxTilemap;
 
 	override public function create()
 	{
 		// load up our room001.json file into our FlxOgmo3Loader object
-		map = new FlxOgmo3Loader(AssetPaths.turnBasedRPG__ogmo, AssetPaths.room_001__json);
+		// map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-001.json");
+		map = new FlxOgmo3Loader(AssetPaths.turnBasedRPG__ogmo, AssetPaths.room_002__json);
+
 		// set our walls as our tiles.png file. GENERATE FlxTilemap from the 'walls' layer
 		// this creates our tilemap itself
 		walls = map.loadTilemap(AssetPaths.tiles__png, "walls");
@@ -26,9 +28,9 @@ class PlayState extends FlxState
 		walls.setTileProperties(2, ANY); // collide on tile 2 (our wall tile)
 		add(walls); // add the tilemap to the state.
 
-		// player = new Player(20, 20);
-
+		// PLAYER PLACEMENT
 		player = new Player();
+		// ***********BUG HERE********** (placing inside the walls: no movement. Outside: perfect movement):
 		map.loadEntities(placeEntities, "entities"); // place our player in the correct location
 		/* We're simply telling our map object to loop through all of the entities in our 'entities'
 			layer, and call our placeEntities() func for each one (which we're about to make now). */
