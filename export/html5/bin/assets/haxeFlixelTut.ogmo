@@ -6,7 +6,7 @@
   "gridColor": "#3c4049cc",
   "anglesRadians": false,
   "directoryDepth": 5,
-  "layerGridDefaultSize": {"x": 8, "y": 8},
+  "layerGridDefaultSize": {"x": 16, "y": 16},
   "levelDefaultSize": {"x": 320, "y": 240},
   "levelMinSize": {"x": 640, "y": 480},
   "levelMaxSize": {"x": 640, "y": 480},
@@ -28,7 +28,7 @@
     {
       "definition": "tile",
       "name": "walls",
-      "gridSize": {"x": 8, "y": 8},
+      "gridSize": {"x": 16, "y": 16},
       "exportID": "14886006",
       "exportMode": 0,
       "arrayMode": 0,

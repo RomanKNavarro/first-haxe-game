@@ -17,8 +17,8 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		// load up our room001.json file into our FlxOgmo3Loader object
-		// map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-001.json");
-		map = new FlxOgmo3Loader(AssetPaths.turnBasedRPG__ogmo, AssetPaths.room_002__json);
+		map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-0011.json");
+		// map = new FlxOgmo3Loader(AssetPaths.turnBasedRPG__ogmo, AssetPaths.room_003__json);
 
 		// set our walls as our tiles.png file. GENERATE FlxTilemap from the 'walls' layer
 		// this creates our tilemap itself
@@ -46,7 +46,8 @@ class PlayState extends FlxState
 		if (entity.name == "player")
 			// if this func. is passed the player, set it's x & y to the entity's x & y values
 		{
-			player.setPosition(entity.x, entity.y); // place player in correct position
+			player.setPosition(entity.x, entity.y);
+			// place player in correct position, which we determined in the ogmo project itself.
 		}
 	}
 
