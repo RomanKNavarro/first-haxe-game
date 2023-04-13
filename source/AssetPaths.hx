@@ -1,4 +1,8 @@
 package;
 
 @:build(flixel.system.FlxAssets.buildFileReferences("assets", true))
-class AssetPaths {}
+class AssetPaths
+{
+	// public static var coin__png(default, null):FlxGraphicAsset;
+	// public static var player__png(default, null):FlxGraphicAsset;
+}

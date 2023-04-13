@@ -15,7 +15,11 @@
       "gridCellsX": 40,
       "gridCellsY": 30,
       "entities": [
-        {"name": "player", "id": 0, "_eid": "28140107", "x": 256.740388587094, "y": 160.32051811612538, "originX": 0, "originY": 0}
+        {"name": "player", "id": 0, "_eid": "28140107", "x": 256.740388587094, "y": 160.32051811612538, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 1, "_eid": "33179949", "x": 304, "y": 128, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 2, "_eid": "33179949", "x": 288, "y": 208, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 3, "_eid": "33179949", "x": 224, "y": 128, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 4, "_eid": "33179949", "x": 288, "y": 176, "originX": 0, "originY": 0}
       ]
     },
     {
