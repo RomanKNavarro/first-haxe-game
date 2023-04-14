@@ -177,9 +177,10 @@ class PlayState extends FlxState
 							won = true;
 							ending = true;
 							FlxG.camera.fade(FlxColor.BLACK, 0.33, false, doneFadeOut);
-							// if victory, fade to black again lol
+							// if victory (kill boss), fade to black again lol
 						}
 					}
+					// if neither victory nor defeat (player won fight), go back to roaming and make enemy flicker
 					else
 					{
 						combatHud.enemy.flicker();
