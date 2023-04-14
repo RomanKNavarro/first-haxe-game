@@ -139,6 +139,13 @@ class PlayState extends FlxState
 
 		if (inCombat)
 		{
+			// after we are done fading to black, we switch the state to the gameOverState.
+			function doneFadeOut()
+			{
+				FlxG.switchState(new GameOverState(won, money));
+			}
+
+			// IRRELEVANT:
 			// if (!combatHud.visible)
 			// {
 			// 	health = combatHud.playerHealth;
