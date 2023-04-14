@@ -1,13 +1,10 @@
-// NEW ENEMY CLASS, DIRECTLY PASTED IN WHOLE
 package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.math.FlxPoint; // for getting the player's position
+import flixel.math.FlxPoint;
 import flixel.math.FlxVelocity;
 
-// since we have two different types of enemies:
-// what is enum? it's a class
 enum EnemyType
 {
 	REGULAR;
@@ -16,21 +13,16 @@ enum EnemyType
 
 class Enemy extends FlxSprite
 {
-	// 40 walk speed, 70 chase speed.
 	static inline var WALK_SPEED:Float = 40;
 	static inline var CHASE_SPEED:Float = 70;
 
-	// FSM AI STUFF:
 	var brain:FSM;
 	var idleTimer:Float;
 	var moveDirection:Float;
 
-	// MAKE THESE TWO public, used in PlayState.hx
 	public var seesPlayer:Bool;
 	public var playerPosition:FlxPoint;
 
-	/* what's this? it's a type variable, which we'll use to figure out which 
-		enemy sprite to load, deal with, etc. */
 	var type:EnemyType;
 
 	public function new(x:Float, y:Float, type:EnemyType)
@@ -52,31 +44,25 @@ class Enemy extends FlxSprite
 		offset.x = 4;
 		offset.y = 8;
 
-		// more FSM stuff. "brain" is a FSM object.
 		brain = new FSM(idle);
 		idleTimer = 0;
-		playerPosition = FlxPoint.get(); // get player's position
+		playerPosition = FlxPoint.get();
 	}
 
 	/*****************************************************************************/
-	// two new func.s.
-	// func when remaining idle:
 	function idle(elapsed:Float)
 	{
 		if (seesPlayer)
 		{
-			brain.activeState = chase; // if sees player, change activeState to chase()
+			brain.activeState = chase;
 		}
-		// what this mean? the code for walking around in idleness
 		else if (idleTimer <= 0)
 		{
-			// 95% of the time: choose a random direction to move in. How long do these intervals last?
 			if (FlxG.random.bool(95))
 			{
 				moveDirection = FlxG.random.int(0, 8) * 45;
 				velocity.setPolarDegrees(WALK_SPEED, moveDirection);
 			}
-			// TODO: the other 5%: just stand around.
 			else
 			{
 				moveDirection = -1;
@@ -84,21 +70,18 @@ class Enemy extends FlxSprite
 			}
 			idleTimer = FlxG.random.int(1, 4);
 		}
-		// AND this one too
 		else
 			idleTimer -= elapsed;
 	}
 
-	// func for when giving chase.
 	function chase(elapsed:Float)
 	{
-		if (!seesPlayer) // custom seesPlayer var.
+		if (!seesPlayer)
 		{
-			brain.activeState = idle; // if player not see, remain aiming around aimlessly.
+			brain.activeState = idle;
 		}
 		else
 		{
-			// otherwise, move towards the player's current location
 			FlxVelocity.moveTowardsPoint(this, playerPosition, CHASE_SPEED);
 		}
 	}
@@ -139,7 +122,7 @@ class Enemy extends FlxSprite
 			case _:
 		}
 
-		brain.update(elapsed); // UPDATE THE BRAIN
+		brain.update(elapsed);
 		super.update(elapsed);
 	}
 }

@@ -9,7 +9,10 @@ import flixel.tile.FlxTilemap;
 
 class PlayState extends FlxState
 {
-	// NEW ENEMIES VAR.
+	var hud:HUD;
+	var money:Int = 0;
+	var health:Int = 3;
+
 	var enemies:FlxTypedGroup<Enemy>;
 
 	var player:Player;
@@ -32,7 +35,6 @@ class PlayState extends FlxState
 		coins = new FlxTypedGroup<Coin>();
 		add(coins);
 
-		// add the enemies into the state
 		enemies = new FlxTypedGroup<Enemy>();
 		add(enemies);
 
@@ -43,25 +45,26 @@ class PlayState extends FlxState
 		add(player);
 		FlxG.camera.follow(player, TOPDOWN, 1);
 
+		// HUD ADDED TO STATE:
+		hud = new HUD();
+		add(hud);
+
 		super.create();
 	}
 
-	// new cases added for the enemies
 	function placeEntities(entity:EntityData)
 	{
 		var x = entity.x;
 		var y = entity.y;
 
-		// we replace all the if/elif statements w/ a switch statement for better readability.
 		switch (entity.name)
 		{
 			case "player":
 				player.setPosition(x, y);
 
 			case "coin":
-				coins.add(new Coin(x + 4, y + 4)); // what's up w/ the 4? same w/ the enemies
+				coins.add(new Coin(x + 4, y + 4));
 
-			// enemy cases:
 			case "enemy":
 				enemies.add(new Enemy(x + 4, y, REGULAR));
 
@@ -75,16 +78,15 @@ class PlayState extends FlxState
 		if (player.alive && player.exists && coin.alive && coin.exists)
 		{
 			coin.kill();
+
+			// update our hud
+			money++;
+			hud.updateHUD(health, money);
 		}
 	}
 
-	/* NOW TO IMPLEMENT ENEMY VISION LOGIC.
-		"Note how we need to modify two enemy variables here (seesPlayer & playerPosition, in Enemy.hx) 
-		for this. The default visibility (for vars, lol) in Haxe is private, so the compiler doesn't allow
-		this. We will have to make them public instead" (MAKES SENSE): */
 	function checkEnemyVision(enemy:Enemy)
 	{
-		// what is ray()?
 		if (walls.ray(enemy.getMidpoint(), player.getMidpoint()))
 		{
 			enemy.seesPlayer = true;
@@ -103,7 +105,7 @@ class PlayState extends FlxState
 		FlxG.overlap(player, coins, playerTouchCoin);
 		FlxG.collide(player, walls);
 
-		FlxG.collide(enemies, walls); // make enemies collide with walls
-		enemies.forEachAlive(checkEnemyVision); //
+		FlxG.collide(enemies, walls);
+		enemies.forEachAlive(checkEnemyVision);
 	}
 }
