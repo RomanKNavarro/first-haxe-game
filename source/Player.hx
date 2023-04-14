@@ -13,8 +13,7 @@ class Player extends FlxSprite
 	{
 		super(x, y);
 
-		// loadGraphic(AssetPaths.player__png, true, 16, 16);
-		loadGraphic("assets/images/player.png", true, 16, 16);
+		loadGraphic(AssetPaths.player__png, true, 16, 16);
 		drag.x = drag.y = 800;
 
 		setSize(8, 8);

@@ -6,18 +6,19 @@ import flixel.addons.editors.ogmo.FlxOgmo3Loader;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
+import flixel.util.FlxColor;
 
 using flixel.util.FlxSpriteUtil;
 
-/* NEW MODULE ^^^^ (what's "using"?). Used to make enemy flicker for a little while after being defeated.
-	This will allow us to use the APIs in the FlxSpriteUtil class, such as flicker(), which can be used 
-	on any FlxObject. For more on how this works, take a look at the Haxe documentation. */
-// combatHUD added to state:
 var inCombat:Bool = false;
 var combatHud:CombatHUD;
 
 class PlayState extends FlxState
 {
+	// new flags to determine if level is won or lost:
+	var ending:Bool;
+	var won:Bool;
+
 	var hud:HUD;
 	var money:Int = 0;
 	var health:Int = 3;
@@ -54,11 +55,9 @@ class PlayState extends FlxState
 		add(player);
 		FlxG.camera.follow(player, TOPDOWN, 1);
 
-		// HUD ADDED TO STATE:
 		hud = new HUD();
 		add(hud);
 
-		// COMBATHUB ADDED:
 		combatHud = new CombatHUD();
 		add(combatHud);
 
@@ -92,7 +91,6 @@ class PlayState extends FlxState
 		{
 			coin.kill();
 
-			// update our hud
 			money++;
 			hud.updateHUD(health, money);
 		}
@@ -111,8 +109,6 @@ class PlayState extends FlxState
 		}
 	}
 
-	/* if player touches enemy, switch to combatHUD. We don't initiate if enemy is flickering (that is,
-		if enemy is currently defeated) */
 	function playerTouchEnemy(player:Player, enemy:Enemy)
 	{
 		if (player.alive && player.exists && enemy.alive && enemy.exists && !enemy.isFlickering())
@@ -121,47 +117,86 @@ class PlayState extends FlxState
 		}
 	}
 
-	// func. to run when in combat. Simply set some variables to true
 	function startCombat(enemy:Enemy)
 	{
-		inCombat = true; // set our inCombat "flag"
+		inCombat = true;
 		player.active = false;
-		// so that the enemy (ALL of them) and player sprites don't move around during combat
+
 		enemies.active = false;
-		combatHud.initCombat(health, enemy); // where is initCombat? line 177 in CombatHUD.hx
+		combatHud.initCombat(health, enemy);
 	}
 
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
-		// we don't want to check for collision when we're in combat (why is this necessary?)
+		/* We don't want to allow anything else to go on if we're
+			ending the game and getting ready to switch states: */
+		if (ending)
+		{
+			return;
+		}
+
 		if (inCombat)
 		{
+			// if (!combatHud.visible)
+			// {
+			// 	health = combatHud.playerHealth;
+			// 	hud.updateHUD(health, money);
+			// 	if (combatHud.outcome == VICTORY)
+			// 	{
+			// 		combatHud.enemy.kill();
+			// 	}
+			// 	else
+			// 	{
+			// 		combatHud.enemy.flicker();
+			// 	}
+			// 	inCombat = false;
+			// 	player.active = true;
+			// 	enemies.active = true;
+			// }
+			// CHANGE OUR LOGIC FROM THIS ^ TO THIS v to accomodate for loss/win scenarios:
+
 			if (!combatHud.visible)
 			{
-				health = combatHud.playerHealth;
+				health = combatHud.playerHealth; // why does combatHud have it's own health?
 				hud.updateHUD(health, money);
-				if (combatHud.outcome == VICTORY)
+				if (combatHud.outcome == DEFEAT)
 				{
-					combatHud.enemy.kill();
+					ending = true;
+					FlxG.camera.fade(FlxColor.BLACK, 0.33, false, doneFadeOut);
+					// fade to black if defeat
 				}
 				else
 				{
-					combatHud.enemy.flicker();
+					if (combatHud.outcome == VICTORY)
+					{
+						combatHud.enemy.kill();
+						if (combatHud.enemy.type == BOSS)
+						{
+							won = true;
+							ending = true;
+							FlxG.camera.fade(FlxColor.BLACK, 0.33, false, doneFadeOut);
+							// if victory, fade to black again lol
+						}
+					}
+					else
+					{
+						combatHud.enemy.flicker();
+					}
+					inCombat = false;
+					player.active = true;
+					enemies.active = true;
 				}
-				inCombat = false;
-				player.active = true;
-				enemies.active = true;
 			}
 		}
 		else
 		{
 			FlxG.overlap(player, coins, playerTouchCoin);
-			FlxG.collide(player, walls); // why don't these have a callback? I guess b/c nothing actually happens
-			// FlxG.collide(enemies, walls);
+			FlxG.collide(player, walls);
+
 			enemies.forEachAlive(checkEnemyVision);
-			// check for collision between player and enemies.
+
 			FlxG.overlap(player, enemies, playerTouchEnemy);
 		}
 	}
