@@ -5,6 +5,8 @@ import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVelocity;
 
+using flixel.util.FlxSpriteUtil; // to make enemy flicker. Why do we need to import it in so many files?
+
 enum EnemyType
 {
 	REGULAR;
@@ -23,7 +25,7 @@ class Enemy extends FlxSprite
 	public var seesPlayer:Bool;
 	public var playerPosition:FlxPoint;
 
-	var type:EnemyType;
+	public var type:EnemyType;
 
 	public function new(x:Float, y:Float, type:EnemyType)
 	{
@@ -86,9 +88,25 @@ class Enemy extends FlxSprite
 		}
 	}
 
+	// NEW FUNC FOR use in combat hub: add enemy sprite to combat screen I guess? WTF is "if (this.type != type)"?
+	public function changeType(type:EnemyType)
+	{
+		if (this.type != type)
+		{
+			this.type = type;
+			var graphic = if (type == BOSS) AssetPaths.boss__png else AssetPaths.enemy__png;
+			loadGraphic(graphic, true, 16, 16);
+		}
+	}
+
 	/*****************************************************************************/
 	override public function update(elapsed:Float)
 	{
+		/* if enemy is flickering, we dont want it to move. MUST be 
+			at the top of the func. How does "return" alone stop it? */
+		if (this.isFlickering())
+			return;
+
 		if (velocity.x != 0 || velocity.y != 0)
 		{
 			if (Math.abs(velocity.x) > Math.abs(velocity.y))

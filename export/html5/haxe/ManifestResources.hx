@@ -85,7 +85,7 @@ import sys.FileSystem;
 
 		#else
 
-		data = '{"name":null,"assets":"aoy4:pathy36:assets%2Fmusic%2Fmusic-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y27:assets%2Fimages%2Fenemy.pngR2i2405R3y5:IMAGER5R7R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i984R3R8R5R9R6tgoR0y26:assets%2Fimages%2Fboss.pngR2i2558R3R8R5R10R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R8R5R11R6tgoR0y26:assets%2Fimages%2Fcoin.pngR2i984R3R8R5R12R6tgoR0y36:assets%2Fimages%2Fimages-go-here.txtR2zR3R4R5R13R6tgoR0y28:assets%2Fimages%2Fplayer.pngR2i1876R3R8R5R14R6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R15R6tgoR0y34:assets%2Fdata%2Fdata-goes-here.txtR2zR3R4R5R16R6tgoR0y30:assets%2Fdata%2Froom-0011.jsonR2i6229R3R4R5R17R6tgoR0y33:assets%2Fdata%2FturnBasedRPG.ogmoR2i6069R3R4R5R18R6tgoR2i39706R3y5:MUSICR5y28:flixel%2Fsounds%2Fflixel.mp3y9:pathGroupaR20y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i2114R3R19R5y26:flixel%2Fsounds%2Fbeep.mp3R21aR23y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i5794R3y5:SOUNDR5R24R21aR23R24hgoR2i33629R3R25R5R22R21aR20R22hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R26R27y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R8R5R32R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R8R5R33R6tgh","rootPath":null,"version":2,"libraryArgs":[],"libraryType":null}';
+		data = '{"name":null,"assets":"aoy4:pathy36:assets%2Fmusic%2Fmusic-goes-here.txty4:sizezy4:typey4:TEXTy2:idR1y7:preloadtgoR0y27:assets%2Fimages%2Fenemy.pngR2i2405R3y5:IMAGER5R7R6tgoR0y28:assets%2Fimages%2Fhealth.pngR2i984R3R8R5R9R6tgoR0y26:assets%2Fimages%2Fboss.pngR2i2558R3R8R5R10R6tgoR0y29:assets%2Fimages%2Fpointer.pngR2i992R3R8R5R11R6tgoR0y27:assets%2Fimages%2Ftiles.pngR2i1056R3R8R5R12R6tgoR0y26:assets%2Fimages%2Fcoin.pngR2i984R3R8R5R13R6tgoR0y36:assets%2Fimages%2Fimages-go-here.txtR2zR3R4R5R14R6tgoR0y28:assets%2Fimages%2Fplayer.pngR2i1876R3R8R5R15R6tgoR2i39300R3y5:SOUNDR5y28:assets%2Fsounds%2Fcombat.wavy9:pathGroupaR17hR6tgoR2i20012R3R16R5y26:assets%2Fsounds%2Fhurt.wavR18aR19hR6tgoR2i54320R3R16R5y25:assets%2Fsounds%2Fwin.wavR18aR20hR6tgoR2i33516R3R16R5y26:assets%2Fsounds%2Flose.wavR18aR21hR6tgoR2i24158R3R16R5y26:assets%2Fsounds%2Fmiss.wavR18aR22hR6tgoR2i10518R3R16R5y28:assets%2Fsounds%2Fselect.wavR18aR23hR6tgoR2i34298R3R16R5y26:assets%2Fsounds%2Ffled.wavR18aR24hR6tgoR0y36:assets%2Fsounds%2Fsounds-go-here.txtR2zR3R4R5R25R6tgoR0y34:assets%2Fdata%2Fdata-goes-here.txtR2zR3R4R5R26R6tgoR0y30:assets%2Fdata%2Froom-0011.jsonR2i6229R3R4R5R27R6tgoR0y33:assets%2Fdata%2FturnBasedRPG.ogmoR2i6069R3R4R5R28R6tgoR2i39706R3y5:MUSICR5y28:flixel%2Fsounds%2Fflixel.mp3R18aR30y28:flixel%2Fsounds%2Fflixel.ogghR6tgoR2i2114R3R29R5y26:flixel%2Fsounds%2Fbeep.mp3R18aR32y26:flixel%2Fsounds%2Fbeep.ogghR6tgoR2i5794R3R16R5R33R18aR32R33hgoR2i33629R3R16R5R31R18aR30R31hgoR2i15744R3y4:FONTy9:classNamey35:__ASSET__flixel_fonts_nokiafc22_ttfR5y30:flixel%2Ffonts%2Fnokiafc22.ttfR6tgoR2i29724R3R34R35y36:__ASSET__flixel_fonts_monsterrat_ttfR5y31:flixel%2Ffonts%2Fmonsterrat.ttfR6tgoR0y33:flixel%2Fimages%2Fui%2Fbutton.pngR2i519R3R8R5R40R6tgoR0y36:flixel%2Fimages%2Flogo%2Fdefault.pngR2i3280R3R8R5R41R6tgh","rootPath":null,"version":2,"libraryArgs":[],"libraryType":null}';
 		manifest = AssetManifest.parse (data, rootPath);
 		library = AssetLibrary.fromManifest (manifest);
 		Assets.registerLibrary ("default", library);
@@ -117,10 +117,18 @@ null
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_enemy_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_health_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_boss_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_pointer_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_tiles_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_coin_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_images_go_here_txt extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_player_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_combat_wav extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_hurt_wav extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_win_wav extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_lose_wav extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_miss_wav extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_select_wav extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_fled_wav extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_sounds_sounds_go_here_txt extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_data_goes_here_txt extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_room_0011_json extends null { }
@@ -142,10 +150,18 @@ null
 @:keep @:image("assets/images/enemy.png") @:noCompletion #if display private #end class __ASSET__assets_images_enemy_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/health.png") @:noCompletion #if display private #end class __ASSET__assets_images_health_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/boss.png") @:noCompletion #if display private #end class __ASSET__assets_images_boss_png extends lime.graphics.Image {}
+@:keep @:image("assets/images/pointer.png") @:noCompletion #if display private #end class __ASSET__assets_images_pointer_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/tiles.png") @:noCompletion #if display private #end class __ASSET__assets_images_tiles_png extends lime.graphics.Image {}
 @:keep @:image("assets/images/coin.png") @:noCompletion #if display private #end class __ASSET__assets_images_coin_png extends lime.graphics.Image {}
 @:keep @:file("assets/images/images-go-here.txt") @:noCompletion #if display private #end class __ASSET__assets_images_images_go_here_txt extends haxe.io.Bytes {}
 @:keep @:image("assets/images/player.png") @:noCompletion #if display private #end class __ASSET__assets_images_player_png extends lime.graphics.Image {}
+@:keep @:file("assets/sounds/combat.wav") @:noCompletion #if display private #end class __ASSET__assets_sounds_combat_wav extends haxe.io.Bytes {}
+@:keep @:file("assets/sounds/hurt.wav") @:noCompletion #if display private #end class __ASSET__assets_sounds_hurt_wav extends haxe.io.Bytes {}
+@:keep @:file("assets/sounds/win.wav") @:noCompletion #if display private #end class __ASSET__assets_sounds_win_wav extends haxe.io.Bytes {}
+@:keep @:file("assets/sounds/lose.wav") @:noCompletion #if display private #end class __ASSET__assets_sounds_lose_wav extends haxe.io.Bytes {}
+@:keep @:file("assets/sounds/miss.wav") @:noCompletion #if display private #end class __ASSET__assets_sounds_miss_wav extends haxe.io.Bytes {}
+@:keep @:file("assets/sounds/select.wav") @:noCompletion #if display private #end class __ASSET__assets_sounds_select_wav extends haxe.io.Bytes {}
+@:keep @:file("assets/sounds/fled.wav") @:noCompletion #if display private #end class __ASSET__assets_sounds_fled_wav extends haxe.io.Bytes {}
 @:keep @:file("assets/sounds/sounds-go-here.txt") @:noCompletion #if display private #end class __ASSET__assets_sounds_sounds_go_here_txt extends haxe.io.Bytes {}
 @:keep @:file("assets/data/data-goes-here.txt") @:noCompletion #if display private #end class __ASSET__assets_data_data_goes_here_txt extends haxe.io.Bytes {}
 @:keep @:file("assets/data/room-0011.json") @:noCompletion #if display private #end class __ASSET__assets_data_room_0011_json extends haxe.io.Bytes {}
