@@ -17,11 +17,13 @@ class OptionsState extends FlxState
 	var volumeText:FlxText;
 	var volumeAmountText:FlxText;
 	var volumeDownButton:FlxButton;
-	var volumeUpButton:FlxButton;
+	var volumeUpButton:FlxButton; // VOLUME UP needs fixing
 	var clearDataButton:FlxButton;
 	var backButton:FlxButton;
 
 	// what is this?
+	/* this is super interesting. It's called "conditional compilation". By running 
+		"lime test html5 -D desktop", the game will run w/ a fullscreen button in the options. */
 	#if desktop
 	var fullscreenButton:FlxButton;
 	#end
@@ -69,6 +71,8 @@ class OptionsState extends FlxState
 		volumeAmountText.screenCenter(FlxAxes.X);
 		add(volumeAmountText);
 
+		/* fullscreen button, with a big callback func that uses ternary. If clicked, it's text changes from 
+			"WINDOWED" to 'FULLSCREEN'. Easy. */
 		#if desktop
 		fullscreenButton = new FlxButton(0, volumeBar.y + volumeBar.height + 8, FlxG.fullscreen ? "FULLSCREEN" : "WINDOWED", clickFullscreen);
 		fullscreenButton.screenCenter(FlxAxes.X);
@@ -92,6 +96,7 @@ class OptionsState extends FlxState
 		super.create();
 	}
 
+	// don't understand why "#if desktop" is needed here.
 	#if desktop
 	function clickFullscreen()
 	{

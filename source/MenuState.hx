@@ -14,9 +14,10 @@ class MenuState extends FlxState
 	override public function create()
 	{
 		var playButton:FlxButton;
-		playButton = new FlxButton(0, 0, "Play", clickPlay);
-		add(playButton);
-		playButton.screenCenter();
+
+		// playButton = new FlxButton(0, 0, "Play", clickPlay);
+		// add(playButton);
+		// playButton.screenCenter();
 
 		// new stuff: add titleText & optionsButton defined earlier into the state.
 		titleText = new FlxText(20, 0, 0, "HaxeFlixel\nTutorial\nGame", 22); // title that looks like a path lol

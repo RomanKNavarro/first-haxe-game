@@ -23,6 +23,7 @@ class PlayState extends FlxState
 	var money:Int = 0;
 	var health:Int = 3;
 
+	// is enemies like a list?
 	var enemies:FlxTypedGroup<Enemy>;
 
 	var player:Player;
@@ -34,7 +35,8 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-0011.json");
+		// map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-0011.json");
+		map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-0022.json");
 
 		walls = map.loadTilemap("assets/images/tiles.png", "walls");
 		walls.follow();
@@ -204,6 +206,7 @@ class PlayState extends FlxState
 			FlxG.collide(player, walls);
 
 			enemies.forEachAlive(checkEnemyVision);
+			enemies.forEachAlive(e -> FlxG.collide(e, walls));
 
 			FlxG.overlap(player, enemies, playerTouchEnemy);
 		}
