@@ -94,7 +94,7 @@ class Player extends FlxSprite
 		switch (facing)
 		{
 			case LEFT, RIGHT:
-				animation.play("lr_" + action);
+				animation.play("lr_" + action); // this could be lr_idle or lr_walk
 			case UP:
 				animation.play("u_" + action);
 			case DOWN:

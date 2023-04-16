@@ -206,7 +206,9 @@ class PlayState extends FlxState
 			FlxG.collide(player, walls);
 
 			enemies.forEachAlive(checkEnemyVision);
-			enemies.forEachAlive(e -> FlxG.collide(e, walls));
+			// THIS ISN'T NECESSARY LOOOL
+			// enemies.forEachAlive(e -> FlxG.collide(e, walls));
+			FlxG.collide(enemies, walls);
 
 			FlxG.overlap(player, enemies, playerTouchEnemy);
 		}

@@ -26,14 +26,14 @@ class Enemy extends FlxSprite
 	var idleTimer:Float;
 	var moveDirection:Float;
 
+	// public var type:EnemyType; CHANGED FROM THIS < TO THIS v
+	public var type(default, null):EnemyType;
 	// MAKE THESE TWO public, as they are used in PlayState.hx
 	public var seesPlayer:Bool;
 	public var playerPosition:FlxPoint;
 
-	/* what's this? it's a type variable, which we'll use to figure out which 
+	/* what's this? it's a type variable, which we'll use to figure out which
 		enemy sprite to load, deal with, etc. */
-	public var type:EnemyType;
-
 	public function new(x:Float, y:Float, type:EnemyType)
 	{
 		super(x, y);
@@ -42,14 +42,18 @@ class Enemy extends FlxSprite
 		loadGraphic(graphic, true, 16, 16);
 		setFacingFlip(LEFT, false, false);
 		setFacingFlip(RIGHT, true, false);
-
 		// THESE ANIMATIONS NOT WORKING
+		// how does animation.add() work again?
+		// we assign each animation (3 frames) a unique name. The ensuing list contains the frames.
+		// what's the third arg (6) for the walking anim.s?
+		// THIS IS GOOD
 		animation.add("d_idle", [0]);
 		animation.add("lr_idle", [3]);
 		animation.add("u_idle", [6]);
 		animation.add("d_walk", [0, 1, 0, 2], 6);
 		animation.add("lr_walk", [3, 4, 3, 5], 6);
 		animation.add("u_walk", [6, 7, 6, 8], 6);
+		// what's this again?
 		drag.x = drag.y = 10;
 		setSize(8, 8);
 		offset.x = 4;
@@ -58,12 +62,54 @@ class Enemy extends FlxSprite
 		// more FSM stuff. "brain" is a FSM object.
 		brain = new FSM(idle);
 		idleTimer = 0;
+		seesPlayer = false; // STRAIGHT OUTA GITHUB
 		playerPosition = FlxPoint.get(); // get player's position
+	}
+
+	override public function update(elapsed:Float)
+	{
+		/* if enemy is flickering, we dont want it to move. MUST be
+			at the top of the func. How does "return" alone stop it? */
+		if (this.isFlickering())
+			return;
+
+		var action = "idle";
+		if (velocity.x != 0 || velocity.y != 0)
+		{
+			action = "walk"; // <- ADDED THIS TOO
+			if (Math.abs(velocity.x) > Math.abs(velocity.y))
+			{
+				if (velocity.x < 0)
+					// WHERE TF IS FACING DEFINED AGAIN?
+					facing = LEFT;
+				else
+					facing = RIGHT;
+			}
+			else
+			{
+				if (velocity.y < 0)
+					facing = UP;
+				else
+					facing = DOWN;
+			}
+		}
+		switch (facing)
+		{
+			case LEFT, RIGHT:
+				animation.play("lr_" + action);
+			case UP:
+				animation.play("u_" + action);
+			case DOWN:
+				animation.play("d_" + action);
+			case _:
+		}
+		brain.update(elapsed);
+		super.update(elapsed);
 	}
 
 	/*****************************************************************************/
 	// two new func.s.
-	// func when remaining idle:
+	// func when remaining idle (not giving chase):
 	function idle(elapsed:Float)
 	{
 		if (seesPlayer)
@@ -95,6 +141,8 @@ class Enemy extends FlxSprite
 	// func for when giving chase.
 	function chase(elapsed:Float)
 	{
+		// continues giving chase to player even if far away. Normal? Yes.
+		// continues giving chase 'til player is out of its sight (like turning a wall)
 		if (!seesPlayer) // custom seesPlayer var.
 		{
 			brain.activeState = idle; // if player not see, remain aiming around aimlessly.
@@ -116,49 +164,5 @@ class Enemy extends FlxSprite
 			loadGraphic(graphic, true, 16, 16);
 		}
 	}
-
 	/*****************************************************************************/
-	override public function update(elapsed:Float)
-	{
-		/* if enemy is flickering, we dont want it to move. MUST be 
-			at the top of the func. How does "return" alone stop it? */
-		if (this.isFlickering())
-			return;
-
-		if (velocity.x != 0 || velocity.y != 0)
-		{
-			if (Math.abs(velocity.x) > Math.abs(velocity.y))
-			{
-				if (velocity.x < 0)
-					facing = LEFT;
-				else
-					facing = RIGHT;
-			}
-			else
-			{
-				if (velocity.y < 0)
-					facing = UP;
-				else
-					facing = DOWN;
-			}
-		}
-		var action = "idle";
-
-		switch (facing)
-		{
-			case LEFT, RIGHT:
-				animation.play("lr_" + action);
-
-			case UP:
-				animation.play("u_" + action);
-
-			case DOWN:
-				animation.play("d_" + action);
-
-			case _:
-		}
-
-		brain.update(elapsed);
-		super.update(elapsed);
-	}
 }

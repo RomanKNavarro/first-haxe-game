@@ -96,6 +96,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite>
 		playerSprite = new Player(background.x + 36, background.y + 16);
 		playerSprite.animation.frameIndex = 3;
 		playerSprite.active = false;
+		// we simply have our player sprite face left towards enemy when in combat. Vice-versa for enemy
 		playerSprite.facing = RIGHT;
 		add(playerSprite);
 
