@@ -19,20 +19,22 @@ class MenuState extends FlxState
 		playButton.screenCenter();
 
 		// new stuff: add titleText & optionsButton defined earlier into the state.
-		// titleText = new FlxText(20, 0, 0, "HaxeFlixel\nTutorial\nGame", 22);
-		// titleText.alignment = CENTER;
-		// titleText.screenCenter(X);
-		// add(titleText);
+		titleText = new FlxText(20, 0, 0, "HaxeFlixel\nTutorial\nGame", 22); // title that looks like a path lol
+		titleText.alignment = CENTER;
+		titleText.screenCenter(X);
+		add(titleText);
 
-		// playButton = new FlxButton(0, 0, "Play", clickPlay);
-		// playButton.x = (FlxG.width / 2) - playButton.width - 10;
-		// playButton.y = FlxG.height - playButton.height - 10;
-		// add(playButton);
+		// new button to press play. Put in middle.
+		playButton = new FlxButton(0, 0, "Play", clickPlay);
+		playButton.x = (FlxG.width / 2) - playButton.width - 10;
+		playButton.y = FlxG.height - playButton.height - 10;
+		add(playButton);
 
-		// optionsButton = new FlxButton(0, 0, "Options", clickOptions);
-		// optionsButton.x = (FlxG.width / 2) + 10;
-		// optionsButton.y = FlxG.height - optionsButton.height - 10;
-		// add(optionsButton);
+		// options button. When clicked, run "clickOptions()" (below)
+		optionsButton = new FlxButton(0, 0, "Options", clickOptions);
+		optionsButton.x = (FlxG.width / 2) + 10;
+		optionsButton.y = FlxG.height - optionsButton.height - 10;
+		add(optionsButton);
 
 		super.create();
 	}
@@ -45,5 +47,11 @@ class MenuState extends FlxState
 	function clickPlay()
 	{
 		FlxG.switchState(new PlayState());
+	}
+
+	// running this switches the state to the options menu.
+	function clickOptions()
+	{
+		FlxG.switchState(new OptionsState());
 	}
 }
