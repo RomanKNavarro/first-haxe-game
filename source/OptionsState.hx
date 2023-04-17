@@ -23,7 +23,8 @@ class OptionsState extends FlxState
 
 	// what is this?
 	/* this is super interesting. It's called "conditional compilation". By running 
-		"lime test html5 -D desktop", the game will run w/ a fullscreen button in the options. */
+		"lime test html5 -D desktop", the game will run w/ a fullscreen button in the options.
+		As for why this code is dark, idk. It works fine. */
 	#if desktop
 	var fullscreenButton:FlxButton;
 	#end
@@ -97,12 +98,15 @@ class OptionsState extends FlxState
 		super.create();
 	}
 
-	// don't understand why "#if desktop" is needed here.
+	/* don't understand why "#if desktop" is needed here. Guess so we don't accidently use it for 
+		when not on DESKTOP lol */
 	#if desktop
 	function clickFullscreen()
 	{
 		FlxG.fullscreen = !FlxG.fullscreen;
 		fullscreenButton.text = FlxG.fullscreen ? "FULLSCREEN" : "WINDOWED";
+		/* now this is interesting: we save the fullscreen value so the game can remember if the user is 
+			windowed or on fullscreen for the next time they load up the game */
 		FlxG.save.data.fullscreen = FlxG.fullscreen;
 	}
 	#end

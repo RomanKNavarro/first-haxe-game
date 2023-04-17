@@ -5,15 +5,28 @@ import flixel.FlxState;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import lime.system.System;
 
 class MenuState extends FlxState
 {
 	var titleText:FlxText;
 	var optionsButton:FlxButton;
 
+	// if in desktop, show this exitButton for when in fullscreen.
+	#if desktop
+	var exitButton:FlxButton;
+	#end
+
 	override public function create()
 	{
 		var playButton:FlxButton;
+
+		// exit desktop button with clickExit() callback func. for when the user is in fullsreen
+		#if desktop
+		exitButton = new FlxButton(FlxG.width - 28, 8, "X", clickExit);
+		exitButton.loadGraphic(AssetPaths.button__png, true, 20, 20);
+		add(exitButton);
+		#end
 
 		titleText = new FlxText(20, 0, 0, "HaxeFlixel\nTutorial\nGame", 22);
 		titleText.alignment = CENTER;
@@ -45,10 +58,14 @@ class MenuState extends FlxState
 		super.create();
 	}
 
-	override public function update(elapsed:Float)
+	// callback func used on line 24 by our exit button
+	#if desktop
+	function clickExit()
 	{
-		super.update(elapsed);
+		System.exit(0);
+		// return;
 	}
+	#end
 
 	function clickPlay()
 	{
@@ -58,5 +75,10 @@ class MenuState extends FlxState
 	function clickOptions()
 	{
 		FlxG.switchState(new OptionsState());
+	}
+
+	override public function update(elapsed:Float)
+	{
+		super.update(elapsed);
 	}
 }
