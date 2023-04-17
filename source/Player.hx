@@ -3,15 +3,25 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
+import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 
 class Player extends FlxSprite
 {
+	/* NEW: to give footsteps to player. We don't want to create and destroy a new sound 
+		object every time we want to play the same sound, so we will create a FlxSound object 
+		to be used over and over */
+	var stepSound:FlxSound;
+
 	static inline var SPEED:Float = 100;
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
+
+		// add footstep to constructor:
+		// stepSound = FlxG.sound.load(AssetPaths.steps__wav);
+		stepSound = FlxG.sound.load("assets/sounds/steps.wav");
 
 		loadGraphic(AssetPaths.player__png, true, 16, 16);
 		drag.x = drag.y = 800;
@@ -89,6 +99,7 @@ class Player extends FlxSprite
 		if ((velocity.x != 0 || velocity.y != 0) && touching == NONE)
 		{
 			action = "walk";
+			stepSound.play(); // if player is walking, play the sound.
 		}
 
 		switch (facing)

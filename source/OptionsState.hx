@@ -44,15 +44,16 @@ class OptionsState extends FlxState
 		add(volumeText);
 
 		// the volume buttons will be smaller than 'default' buttons
-		volumeDownButton = new FlxButton(8, volumeText.y + volumeText.height + 2, "-", clickVolumeDown);
-		// volumeDownButton.loadGraphic(AssetPaths.button__png, true, 20, 20);
-		volumeDownButton.loadGraphic("assets/images/button.png", true, 20, 20);
+		// x, y, text, callback
+		volumeDownButton = new FlxButton(8, volumeText.y + volumeText.height + 2, "+", clickVolumeDown);
+		volumeDownButton.loadGraphic(AssetPaths.button__png, true, 20, 20);
+		// volumeDownButton.loadGraphic("assets/images/button.png", true, 20, 20);
 		volumeDownButton.onUp.sound = FlxG.sound.load(AssetPaths.select__wav);
 		add(volumeDownButton);
 
-		volumeUpButton = new FlxButton(FlxG.width - 28, volumeDownButton.y, "+", clickVolumeUp);
-		// volumeUpButton.loadGraphic(AssetPaths.button__png, true, 20, 20);
-		volumeDownButton.loadGraphic("assets/images/button.png", true, 20, 20);
+		volumeUpButton = new FlxButton(FlxG.width - 28, volumeDownButton.y, "-", clickVolumeUp);
+		volumeUpButton.loadGraphic(AssetPaths.button__png, true, 20, 20);
+		// volumeDownButton.loadGraphic("assets/images/button.png", true, 20, 20);
 		volumeUpButton.onUp.sound = FlxG.sound.load(AssetPaths.select__wav);
 		add(volumeUpButton);
 

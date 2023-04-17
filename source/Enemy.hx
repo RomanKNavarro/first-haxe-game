@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint; // for getting the player's position
 import flixel.math.FlxVelocity;
+import flixel.system.FlxSound;
 
 using flixel.util.FlxSpriteUtil; // to make enemy flicker. Why do we need to import it in so many files?
 
@@ -17,6 +18,8 @@ enum EnemyType
 
 class Enemy extends FlxSprite
 {
+	var stepSound:FlxSound; // NEW: for enemy footsteps
+
 	// 40 walk speed, 70 chase speed.
 	static inline var WALK_SPEED:Float = 40;
 	static inline var CHASE_SPEED:Float = 70;
@@ -64,6 +67,11 @@ class Enemy extends FlxSprite
 		idleTimer = 0;
 		seesPlayer = false; // STRAIGHT OUTA GITHUB
 		playerPosition = FlxPoint.get(); // get player's position
+
+		// NEW: add footsteps to constructor. We set volume to 0.4 so they don't sound so annoying:
+		// stepSound = FlxG.sound.load(AssetPaths.steps__wav, 0.4);
+		stepSound = FlxG.sound.load("assets/sounds/steps.wav", 0.4);
+		stepSound.proximity(x, y, FlxG.camera.target, FlxG.width * 0.6);
 	}
 
 	override public function update(elapsed:Float)
@@ -77,6 +85,10 @@ class Enemy extends FlxSprite
 		if (velocity.x != 0 || velocity.y != 0)
 		{
 			action = "walk"; // <- ADDED THIS TOO
+			/* NEW: PLAY SOUND WHEN ENEMY WALKS. Unlike for the player's footsteps, we only want to play
+				these sounds at the location where the enemy is actually walking. Neat. */
+			stepSound.setPosition(x + frameWidth / 2, y + height);
+			stepSound.play();
 			if (Math.abs(velocity.x) > Math.abs(velocity.y))
 			{
 				if (velocity.x < 0)

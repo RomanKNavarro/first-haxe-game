@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
@@ -15,6 +16,9 @@ var combatHud:CombatHUD;
 
 class PlayState extends FlxState
 {
+	// NEW SOUND FOR COIN. Very specific reason why we have it here in PlayState and not Coin.hx (see notes):
+	var coinSound:FlxSound;
+
 	// new flags to determine if level is won or lost:
 	var ending:Bool;
 	var won:Bool;
@@ -35,6 +39,9 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		// load coin sound here.
+		coinSound = FlxG.sound.load("assets/sounds/coin.wav");
+
 		// map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-0011.json");
 		map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-0022.json");
 
@@ -91,6 +98,7 @@ class PlayState extends FlxState
 	{
 		if (player.alive && player.exists && coin.alive && coin.exists)
 		{
+			coinSound.play(true); // play coin sound itself when picked up
 			coin.kill();
 
 			money++;

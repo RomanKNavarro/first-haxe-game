@@ -2,12 +2,12 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 
 class MenuState extends FlxState
 {
-	// add title text and options button in the menu. Why do we put it here and not in the state?
 	var titleText:FlxText;
 	var optionsButton:FlxButton;
 
@@ -15,27 +15,32 @@ class MenuState extends FlxState
 	{
 		var playButton:FlxButton;
 
-		// playButton = new FlxButton(0, 0, "Play", clickPlay);
-		// add(playButton);
-		// playButton.screenCenter();
-
-		// new stuff: add titleText & optionsButton defined earlier into the state.
-		titleText = new FlxText(20, 0, 0, "HaxeFlixel\nTutorial\nGame", 22); // title that looks like a path lol
+		titleText = new FlxText(20, 0, 0, "HaxeFlixel\nTutorial\nGame", 22);
 		titleText.alignment = CENTER;
 		titleText.screenCenter(X);
 		add(titleText);
 
-		// new button to press play. Put in middle.
 		playButton = new FlxButton(0, 0, "Play", clickPlay);
+		// make sound when play button is pressed. It's that simple!
+		playButton.onUp.sound = FlxG.sound.load(AssetPaths.select__wav);
 		playButton.x = (FlxG.width / 2) - playButton.width - 10;
 		playButton.y = FlxG.height - playButton.height - 10;
 		add(playButton);
 
-		// options button. When clicked, run "clickOptions()" (below)
 		optionsButton = new FlxButton(0, 0, "Options", clickOptions);
+		optionsButton.onUp.sound = FlxG.sound.load(AssetPaths.select__wav); // sound for options button
 		optionsButton.x = (FlxG.width / 2) + 10;
 		optionsButton.y = FlxG.height - optionsButton.height - 10;
 		add(optionsButton);
+
+		/* NEW CONDITIONAL FOR MUSIC. We put this in create() b/c we want the music to play as soon as the 
+			game starts. We are also checking to see if the music is already playing so we don't restart it
+			unnecessarily */
+		if (FlxG.sound.music == null) // don't restart the music if it's already playing
+		{
+			// FlxG.sound.playMusic(AssetPaths.HaxeFlixel_Tutorial_Game__ogg, 1, true);
+			FlxG.sound.playMusic("assets/music/HaxeFlixel_Tutorial_Game.ogg", 1, true);
+		}
 
 		super.create();
 	}
@@ -50,7 +55,6 @@ class MenuState extends FlxState
 		FlxG.switchState(new PlayState());
 	}
 
-	// running this switches the state to the options menu.
 	function clickOptions()
 	{
 		FlxG.switchState(new OptionsState());

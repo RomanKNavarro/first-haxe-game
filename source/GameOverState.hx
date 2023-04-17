@@ -68,7 +68,7 @@ class GameOverState extends FlxState
 
 		// put highscore in middle
 		highscoreText = new FlxText(0, (FlxG.height / 2) + 10, 0, "Highscore: " + highscore, 8);
-		highscoreText.alignment = CENTER;
+		// highscoreText.alignment = CENTER;
 		highscoreText.screenCenter(FlxAxes.Y);
 		add(highscoreText);
 
