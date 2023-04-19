@@ -14,22 +14,23 @@
 -D flixel-addons=3.0.2
 -cp source
 -D MAC_USE_CURRENT_SDK=1
+-D desktop
 -D tools=8.0.1
 -D lime-canvas
+-D FLX_NO_DEBUG
 -D howlerjs
 -D no-compilation
 -D openfl-html5
+-D NAPE_RELEASE_BUILD
 -D lime-webgl
+-D FLX_NO_TOUCH
 -D lime-dom
 -D lime-howlerjs
 -D lime-html5
--D openfl-disable-handle-error
 -D html5
 -D web
 --remap flash:openfl
 --macro flixel.system.macros.FlxDefines.run()
---connect
-6000
 -js export/html5/bin/TurnBasedRPG.js
 -cp export/html5/haxe
 -D html5

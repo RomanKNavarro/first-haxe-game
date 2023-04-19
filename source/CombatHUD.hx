@@ -7,7 +7,7 @@ import flash.geom.Point;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.effects.chainable.FlxEffectSprite;
-import flixel.addons.effects.chainable.FlxWaveEffect;
+import flixel.addons.effects.chainable.FlxWaveEffect; // MODULE FOR WAVE EFFECT
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.system.FlxSound; // MODULE FOR SOUNDS
 import flixel.text.FlxText;
@@ -81,6 +81,8 @@ class CombatHUD extends FlxTypedGroup<FlxSprite>
 		super();
 
 		screen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT);
+
+		// COOL WAVY SCREEN EFFECT.
 		var waveEffect = new FlxWaveEffect(FlxWaveMode.ALL, 4, -1, 4);
 		var waveSprite = new FlxEffectSprite(screen, [waveEffect]);
 		add(waveSprite);
@@ -177,6 +179,8 @@ class CombatHUD extends FlxTypedGroup<FlxSprite>
 	 */
 	public function initCombat(playerHealth:Int, enemy:Enemy)
 	{
+		/* FOR WAVE EFFECT:  we want to make our screen take a copy of whatever is on the camera's 
+			buffer and apply it to itself, and then desaturate the image. */
 		screen.drawFrame();
 		var screenPixels = screen.framePixels;
 
@@ -268,6 +272,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite>
 
 	function updateKeyboardInput()
 	{
+		// this added for only if the user is using keyboard and not on mobile
 		#if FLX_KEYBOARD
 		// setup some simple flags to see which keys are pressed.
 		var up:Bool = false;
@@ -304,6 +309,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite>
 		#end
 	}
 
+	// ME: this gives functionality to all of our buttons touched on mobile.
 	function updateTouchInput()
 	{
 		#if FLX_TOUCH
@@ -349,6 +355,9 @@ class CombatHUD extends FlxTypedGroup<FlxSprite>
 				{
 					// if they hit, deal 1 damage to the enemySprite, and setup our damage indicator
 					damages[1].text = "1";
+
+					/* THESE "TWEENS" ARE INTERESTING. If enemy is hit, move them 4 pixels to the right 
+						and back in rapid succession. */
 					FlxTween.tween(enemySprite, {x: enemySprite.x + 4}, 0.1, {
 						onComplete: function(_)
 						{
@@ -417,6 +426,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite>
 		{
 			// if we hit, flash the screen white, and deal one damage to the playerSprite - then update the playerSprite's health
 			FlxG.camera.flash(FlxColor.WHITE, .2);
+			// IF WE GET HIT, SHAKE THE SCREEN. IT'S THIS EASSSYYYY:
 			FlxG.camera.shake(0.01, 0.2);
 			hurtSound.play();
 			damages[0].text = "1";

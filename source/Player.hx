@@ -47,10 +47,22 @@ class Player extends FlxSprite
 		var left:Bool = false;
 		var right:Bool = false;
 
+		// update our keys to accomodate for mobile. How? making these exist only if there's a keyboard.
+		#if FLX_KEYBOARD
 		up = FlxG.keys.anyPressed([UP, W]);
 		down = FlxG.keys.anyPressed([DOWN, S]);
 		left = FlxG.keys.anyPressed([LEFT, A]);
 		right = FlxG.keys.anyPressed([RIGHT, D]);
+		#end
+
+		// FOR MOBILE. Looks a little stiff...
+		#if mobile
+		var virtualPad = PlayState.virtualPad;
+		up = up || virtualPad.buttonUp.pressed;
+		down = down || virtualPad.buttonDown.pressed;
+		left = left || virtualPad.buttonLeft.pressed;
+		right = right || virtualPad.buttonRight.pressed;
+		#end
 
 		if (up && down)
 			up = down = false;

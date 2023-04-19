@@ -37,7 +37,7 @@ class GameOverState extends FlxState
 	override public function create()
 	{
 		#if FLX_MOUSE
-		FlxG.mouse.visible = true;
+		FlxG.mouse.visible = true; // MAKE MOUSE VISIBLE IN GAMEOVER STATE (INVISIBLE DURING COMBAT)
 		#end
 
 		// create and add each of our items

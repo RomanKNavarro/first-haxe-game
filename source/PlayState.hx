@@ -11,15 +11,17 @@ import flixel.util.FlxColor;
 
 using flixel.util.FlxSpriteUtil;
 
-var inCombat:Bool = false;
-var combatHud:CombatHUD;
-
 class PlayState extends FlxState
 {
-	// NEW SOUND FOR COIN. Very specific reason why we have it here in PlayState and not Coin.hx (see notes):
+	// "VIRTUALPAD" OBJECT FOR MOBILE
+	#if mobile
+	public static var virtualPad:FlxVirtualPad;
+	#end
+
+	var inCombat:Bool = false;
+	var combatHud:CombatHUD;
 	var coinSound:FlxSound;
 
-	// new flags to determine if level is won or lost:
 	var ending:Bool;
 	var won:Bool;
 
@@ -27,7 +29,6 @@ class PlayState extends FlxState
 	var money:Int = 0;
 	var health:Int = 3;
 
-	// is enemies like a list?
 	var enemies:FlxTypedGroup<Enemy>;
 
 	var player:Player;
@@ -39,10 +40,18 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		// load coin sound here.
+		// add virtualPad to state
+		#if mobile
+		virtualPad = new FlxVirtualPad(FULL, NONE);
+		add(virtualPad);
+		#end
+
+		#if FLX_MOUSE
+		FlxG.mouse.visible = false; // MAKE MOUSE INVISIBLE DURING PLAY
+		#end
+
 		coinSound = FlxG.sound.load("assets/sounds/coin.wav");
 
-		// map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-0011.json");
 		map = new FlxOgmo3Loader("assets/data/turnBasedRPG.ogmo", "assets/data/room-0022.json");
 
 		walls = map.loadTilemap("assets/images/tiles.png", "walls");
@@ -70,6 +79,7 @@ class PlayState extends FlxState
 		combatHud = new CombatHUD();
 		add(combatHud);
 
+		FlxG.camera.fade(FlxColor.BLACK, 0.33, true);
 		super.create();
 	}
 
@@ -98,7 +108,7 @@ class PlayState extends FlxState
 	{
 		if (player.alive && player.exists && coin.alive && coin.exists)
 		{
-			coinSound.play(true); // play coin sound itself when picked up
+			coinSound.play(true);
 			coin.kill();
 
 			money++;
@@ -129,6 +139,11 @@ class PlayState extends FlxState
 
 	function startCombat(enemy:Enemy)
 	{
+		// remove the distraction of our virtual pad while combat is happening, as we can't move in combat
+		#if mobile
+		virtualPad.visible = false;
+		#end
+
 		inCombat = true;
 		player.active = false;
 
@@ -140,8 +155,6 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		/* We don't want to allow anything else to go on if we're
-			ending the game and getting ready to switch states: */
 		if (ending)
 		{
 			return;
@@ -149,40 +162,19 @@ class PlayState extends FlxState
 
 		if (inCombat)
 		{
-			// after we are done fading to black, we switch the state to the gameOverState.
 			function doneFadeOut()
 			{
 				FlxG.switchState(new GameOverState(won, money));
 			}
 
-			// IRRELEVANT:
-			// if (!combatHud.visible)
-			// {
-			// 	health = combatHud.playerHealth;
-			// 	hud.updateHUD(health, money);
-			// 	if (combatHud.outcome == VICTORY)
-			// 	{
-			// 		combatHud.enemy.kill();
-			// 	}
-			// 	else
-			// 	{
-			// 		combatHud.enemy.flicker();
-			// 	}
-			// 	inCombat = false;
-			// 	player.active = true;
-			// 	enemies.active = true;
-			// }
-			// CHANGE OUR LOGIC FROM THIS ^ TO THIS v to accomodate for loss/win scenarios:
-
 			if (!combatHud.visible)
 			{
-				health = combatHud.playerHealth; // why does combatHud have it's own health?
+				health = combatHud.playerHealth;
 				hud.updateHUD(health, money);
 				if (combatHud.outcome == DEFEAT)
 				{
 					ending = true;
 					FlxG.camera.fade(FlxColor.BLACK, 0.33, false, doneFadeOut);
-					// fade to black if defeat
 				}
 				else
 				{
@@ -194,10 +186,8 @@ class PlayState extends FlxState
 							won = true;
 							ending = true;
 							FlxG.camera.fade(FlxColor.BLACK, 0.33, false, doneFadeOut);
-							// if victory (kill boss), fade to black again lol
 						}
 					}
-					// if neither victory nor defeat (player won fight), go back to roaming and make enemy flicker
 					else
 					{
 						combatHud.enemy.flicker();
@@ -210,12 +200,16 @@ class PlayState extends FlxState
 		}
 		else
 		{
+			// when out of combat, make virtual pad visible
+			#if mobile
+			virtualPad.visible = true;
+			#end
+
 			FlxG.overlap(player, coins, playerTouchCoin);
 			FlxG.collide(player, walls);
 
 			enemies.forEachAlive(checkEnemyVision);
-			// THIS ISN'T NECESSARY LOOOL
-			// enemies.forEachAlive(e -> FlxG.collide(e, walls));
+
 			FlxG.collide(enemies, walls);
 
 			FlxG.overlap(player, enemies, playerTouchEnemy);
